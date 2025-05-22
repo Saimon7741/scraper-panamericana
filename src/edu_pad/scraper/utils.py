@@ -1,5 +1,3 @@
-import os
-import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
@@ -38,22 +36,3 @@ def get_search_results(query, headers):
         "https://www.panamericana.com.co" + link['href']
         for link in soup.find_all('a', {'class': 'vtex-product-summary-2-x-clearLink'}, href=True)
     ]
-
-def save_to_excel(data, filename="Productos_Panamericana.xlsx"):
-    os.makedirs('src/edu_pad/static/xlsx', exist_ok=True)
-    filepath = os.path.join('src/edu_pad/static/xlsx', filename)
-    
-    df = pd.DataFrame(data)
-    df['Precio'] = df['Precio'].apply(
-        lambda x: f"{str(x).split('.')[0]}.000" if x != 'No se encontró el precio' else x
-    )
-    
-    if os.path.exists(filepath):
-        existing_df = pd.read_excel(filepath)
-        existing_df['Precio'] = existing_df['Precio'].apply(
-            lambda x: f"{str(x).split('.')[0]}.000" if x != 'No se encontró el precio' else x
-        )
-        df = pd.concat([existing_df, df], ignore_index=True)
-    
-    df.to_excel(filepath, index=False)
-    return filepath

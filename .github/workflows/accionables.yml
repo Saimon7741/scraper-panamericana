@@ -25,11 +25,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e .
 
-      - name: 4. Ejecutar scraper
+      - name: 4. Ejecutar main
         run: |
           python src/edu_pad/main.py --search "percy"
 
-      - name: 5. Commit y push de resultados
+      - name: 5. Commit resultados
         if: success()
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
