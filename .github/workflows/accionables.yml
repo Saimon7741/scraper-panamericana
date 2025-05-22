@@ -1,3 +1,5 @@
+name: accionables
+
 on:
   push:
     branches: [ main ]
@@ -43,7 +45,7 @@ jobs:
         if: success()
         uses: actions/git-commit-push@v5
         with:
-          commit_message: "Actualización automática de datos - $(date +'%Y-%m-%d %H:%M')"
+          commit_message: "Guardar csv"
           commit_user_name: "Saimon7741 [Github Actions]"
           commit_user_email: simon.lara@est.iudigital.edu.co
           commit_author: "Saimon7741 <simon.lara@est.iudigital.edu.co>"
