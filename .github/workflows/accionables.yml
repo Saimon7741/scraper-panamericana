@@ -1,0 +1,47 @@
+name: accionables
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    permissions:
+      contents: write
+
+
+    steps:
+      - name: Paso 1 - checkout repo
+        uses: actions/checkout@v4
+
+      - name: Paso 2 - Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Paso 3 - Crear entorno virtual
+        run: python -m venv venv
+
+      - name: Paso 4 - Activar entorno virtual
+        run: ./venv/Scripts/activate
+
+      - name: Paso 5 - Actualizar pip
+        run: pip install --upgrade pip
+
+      - name: Paso 6 - Instalar dependencias
+        run: pip install -e .
+
+      - name: Paso 7 - ir a la ruta
+        run: cd src/edu_pad
+        
+      - name: Paso 8 - Ejecutar Streamlit
+        run: python -m streamlit run scraping.py
+      
+      - name: Commit y push changes
+        uses: actions/git-commit-push@v5
+        with:
+          commit_message: Genera archivo
+          commit_user_name: "Saimon7741 [Github Actions]"
+          commit_user_email: simon.lara@est.iudigital.edu.co
+          commit_author: "Saimon7741 <simon.lara@est.iudigital.edu.co>"
