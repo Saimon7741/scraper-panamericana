@@ -1,9 +1,19 @@
 import os
+import sys
 from datetime import datetime
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 import argparse
+
+def safe_print(text):
+    """Maneja impresión segura para consolas que no soportan Unicode"""
+    try:
+        print(text)
+    except UnicodeEncodeError:
+        # Reemplaza emojis en caso de error
+        cleaned = text.replace('🔍', '[BUSCAR]').replace('📊', '[DATOS]').replace('✅', '[OK]').replace('⚠️', '[ALERTA]')
+        print(cleaned)
 
 def get_product_info(url):
     headers = {
@@ -63,19 +73,19 @@ def get_search_results(query):
     return product_links
 
 def main(search_term):
-    print(f"🔍 Buscando: {search_term}")
+    safe_print(f"🔍 Buscando: {search_term}")
     product_urls = get_search_results(search_term)
 
     if not product_urls:
-        print("⚠️ No se encontraron resultados")
+        safe_print("⚠️ No se encontraron resultados")
         return
 
     all_data = []
-    print(f"📊 Procesando {len(product_urls[:10])} productos...")
+    safe_print(f"📊 Procesando {len(product_urls[:10])} productos...")
     
     for i, url in enumerate(product_urls[:10]):
         title, price = get_product_info(url)
-        print(f"{i+1}. {title[:50]}... - ${price}")
+        safe_print(f"{i+1}. {title[:50]}... - ${price}")
 
         if title != 'No se encontró el título':
             all_data.append({
@@ -87,9 +97,9 @@ def main(search_term):
 
     if all_data:
         file_name = save_to_excel(all_data)
-        print(f"\n✅ Datos guardados en: {file_name}")
+        safe_print(f"\n✅ Datos guardados en: {file_name}")
     else:
-        print("⚠️ No se encontraron productos válidos")
+        safe_print("⚠️ No se encontraron productos válidos")
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Scraper Automático de Panamericana')
