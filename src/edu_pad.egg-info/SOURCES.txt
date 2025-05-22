@@ -1,0 +1,7 @@
+setup.py
+src/edu_pad/scraping.py
+src/edu_pad.egg-info/PKG-INFO
+src/edu_pad.egg-info/SOURCES.txt
+src/edu_pad.egg-info/dependency_links.txt
+src/edu_pad.egg-info/requires.txt
+src/edu_pad.egg-info/top_level.txt

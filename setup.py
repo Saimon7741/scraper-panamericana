@@ -8,7 +8,7 @@ setup(
     description="Este proyecto es para hacer scrapeo a la pagina web de panamericana",
     install_requires=[
         "pandas",
-        "request",
+        "requests",
         "streamlit",
         "beautifulsoup4",
         "openpyxl",

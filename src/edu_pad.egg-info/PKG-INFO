@@ -1,0 +1,16 @@
+Metadata-Version: 2.4
+Name: edu_pad
+Version: 0.0.1
+Summary: Este proyecto es para hacer scrapeo a la pagina web de panamericana
+Author: Simon Lara
+Author-email: simon.lara@est.iudigital.edu.co
+Requires-Dist: pandas
+Requires-Dist: requests
+Requires-Dist: streamlit
+Requires-Dist: beautifulsoup4
+Requires-Dist: openpyxl
+Requires-Dist: lxml
+Dynamic: author
+Dynamic: author-email
+Dynamic: requires-dist
+Dynamic: summary
