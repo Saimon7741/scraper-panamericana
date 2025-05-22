@@ -30,18 +30,17 @@ jobs:
 
       - name: 5. Instalar dependencias
         run: |
-          pip install openpyxl pandas beautifulsoup4 requests streamlit lxml
           pip install -e .
 
       - name: 6. Ejecutar aplicación Streamlit
         working-directory: ./src/edu_pad
         run: |
-          streamlit run scraping.py --server.headless true --server.runOnSave true --browser.gatherUsageStats false
+          streamlit run scraping.py
 
       - name: 7. Commit y push de resultados
         if: success()
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "Actualización automática de datos - $(date +'%d/%m/%Y %H:%M')"
+          commit_message: "Genera csv"
           commit_user_name: "Saimon7741 [GitHub Actions]"
           commit_user_email: simon.lara@est.iudigital.edu.co
