@@ -4,7 +4,6 @@ from scraper.storage.db import DB
 from scraper.storage.excel import Excel
 
 def safe_print(text):
-    """Maneja impresión segura para consolas con problemas de Unicode"""
     try:
         print(text)
     except UnicodeEncodeError:
