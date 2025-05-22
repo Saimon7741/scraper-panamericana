@@ -26,14 +26,13 @@ jobs:
           pip install -e .
 
       - name: 4. Ejecutar scraper
-        working-directory: ./src/edu_pad
         run: |
-          python scraping.py --search "percy"
+          python main.py --search "percy"
 
       - name: 5. Commit y push de resultados
         if: success()
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "Resultados busqueda percy"
+          commit_message: "Resultados búsqueda percy"
           commit_user_name: "Saimon7741 [GitHub Actions]"
           commit_user_email: simon.lara@est.iudigital.edu.co
