@@ -1,41 +1,48 @@
 import argparse
+import sqlite3
+import pandas as pd
 from scraper.scraping import run_scraper
 from scraper.storage.db import DB
 from scraper.storage.excel import Excel
-import pandas as pd
-import sqlite3
+
+def safe_print(text):
+    try:
+        print(text)
+    except UnicodeEncodeError:
+        cleaned = (text
+                  .replace('📊', '[DATOS]')
+                  .replace('🔍', '[BUSCAR]')
+                  .replace('✅', '[OK]')
+                  .replace('⚠️', '[ALERTA]'))
+        print(cleaned)
 
 def display_results(search_term):
-    """Muestra los resultados almacenados en ambos formatos"""
-    print("\n" + "="*50)
-    print("📊 RESULTADOS OBTENIDOS".center(50))
-    print("="*50)
+    safe_print("\n" + "="*50)
+    safe_print(" RESULTADOS OBTENIDOS ".center(50, '='))
+    safe_print("="*50)
     
     # Mostrar datos de SQLite
-    print("\n🔍 DATOS EN BASE DE DATOS SQLite:")
-    db_handler = DB()
+    safe_print("\n[DATOS] DATOS EN BASE DE DATOS SQLite:")
+    db = DB()
     try:
-        conn = sqlite3.connect(db_handler.db_path)
+        conn = sqlite3.connect(db.db_path)
         df_sqlite = pd.read_sql_query(
             f"SELECT fecha, producto, precio, url FROM Productos_Panamericana WHERE search_term = '{search_term}' ORDER BY fecha DESC",
             conn
         )
-        print(df_sqlite.to_string(index=False))
+        safe_print(df_sqlite.to_string(index=False))
         conn.close()
     except Exception as e:
-        print(f"⚠️ Error al leer la base de datos: {e}")
+        safe_print(f"[ALERTA] Error al leer la base de datos: {e}")
     
     # Mostrar datos de Excel
-    print("\n📄 DATOS EN ARCHIVO EXCEL:")
-    excel_handler = Excel()
-    excel_file = excel_handler.save([], "Productos_Panamericana.xlsx")
+    safe_print("\n[DATOS] DATOS EN ARCHIVO EXCEL:")
+    excel = Excel()
     try:
-        df_excel = pd.read_excel(excel_file)
-        if 'search_term' in df_excel.columns:
-            df_excel = df_excel[df_excel['search_term'] == search_term]
-        print(df_excel.to_string(index=False))
+        df_excel = excel.filter_by_search_term(search_term)
+        safe_print(df_excel.to_string(index=False))
     except Exception as e:
-        print(f"⚠️ Error al leer el archivo Excel: {e}")
+        safe_print(f"[ALERTA] Error al leer el archivo Excel: {e}")
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Scraper Automático de Panamericana')

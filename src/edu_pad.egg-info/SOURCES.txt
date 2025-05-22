@@ -8,3 +8,5 @@ src/edu_pad.egg-info/top_level.txt
 src/edu_pad/scraper/config.py
 src/edu_pad/scraper/scraping.py
 src/edu_pad/scraper/utils.py
+src/edu_pad/scraper/storage/db.py
+src/edu_pad/scraper/storage/excel.py
