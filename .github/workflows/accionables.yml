@@ -27,7 +27,7 @@ jobs:
 
       - name: 4. Ejecutar scraper
         run: |
-          python main.py --search "percy"
+          python src/edu_pad/main.py --search "percy"
 
       - name: 5. Commit y push de resultados
         if: success()
