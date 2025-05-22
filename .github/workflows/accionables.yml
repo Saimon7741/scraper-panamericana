@@ -2,50 +2,46 @@ name: accionables
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
-  run-scraper:
+  scraper:
     runs-on: windows-latest
     permissions:
       contents: write
 
     steps:
-      - name: 1. Checkout del repositorio
+      - name: 1. Checkout del código
         uses: actions/checkout@v4
 
       - name: 2. Configurar Python 3.10
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
       - name: 3. Crear entorno virtual
         run: python -m venv venv
 
-      - name: 4. Activar entorno virtual
+      - name: 4. Activar entorno y actualizar pip
         run: |
           .\venv\Scripts\activate
           python -m pip install --upgrade pip
 
       - name: 5. Instalar dependencias
         run: |
+          pip install openpyxl pandas beautifulsoup4 requests streamlit lxml
           pip install -e .
 
-      - name: 6. Navegar al directorio del scraper
-        working-directory: ./src/edu_pad
-        run: echo "Directorio actual: $(pwd)"
-
-      - name: 7. Ejecutar aplicación Streamlit (modo headless)
+      - name: 6. Ejecutar aplicación Streamlit
         working-directory: ./src/edu_pad
         run: |
           streamlit run scraping.py --server.headless true --server.runOnSave true --browser.gatherUsageStats false
 
-      - name: 8. Confirmar y subir cambios
+      - name: 7. Commit y push de resultados
         if: success()
-        uses: actions/git-commit-push@v5
+        uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "Guardar csv"
-          commit_user_name: "Saimon7741 [Github Actions]"
+          commit_message: "Actualización automática de datos - $(date +'%d/%m/%Y %H:%M')"
+          commit_user_name: "Saimon7741 [GitHub Actions]"
           commit_user_email: simon.lara@est.iudigital.edu.co
-          commit_author: "Saimon7741 <simon.lara@est.iudigital.edu.co>"
