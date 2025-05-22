@@ -4,6 +4,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      search_term:
+        description: 'Término de búsqueda'
+        required: true
+        default: 'libros'
 
 jobs:
   scraper:
@@ -15,32 +20,27 @@ jobs:
       - name: 1. Checkout del código
         uses: actions/checkout@v4
 
-      - name: 2. Configurar Python 3.10
+      - name: 2. Configurar Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
-      - name: 3. Crear entorno virtual
-        run: python -m venv venv
-
-      - name: 4. Activar entorno y actualizar pip
+      - name: 3. Instalar dependencias
         run: |
-          .\venv\Scripts\activate
           python -m pip install --upgrade pip
+          pip install pandas beautifulsoup4 requests openpyxl
 
-      - name: 5. Instalar dependencias
-        run: |
-          pip install -e .
-
-      - name: 6. Ejecutar aplicación Streamlit
+      - name: 4. Ejecutar scraper
         working-directory: ./src/edu_pad
+        env:
+          SEARCH_TERM: ${{ github.event.inputs.search_term || 'libros' }}
         run: |
-          streamlit run scraping.py
+          python scraping.py
 
-      - name: 7. Commit y push de resultados
+      - name: 5. Commit y push de resultados
         if: success()
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "Genera csv"
+          commit_message: "Resultados scraper: ${{ github.event.inputs.search_term || 'libros' }}"
           commit_user_name: "Saimon7741 [GitHub Actions]"
           commit_user_email: simon.lara@est.iudigital.edu.co
