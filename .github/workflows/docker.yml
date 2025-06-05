@@ -3,6 +3,7 @@ name: docker
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   scraper:
