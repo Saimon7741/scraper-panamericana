@@ -60,7 +60,7 @@ def process_products(product_urls, search_term, max_products=10):
                 'Producto': title,
                 'Precio': price,
                 'URL': url,
-                'search_term': search_term
+                'Busqueda': search_term
             })
     
     return all_data

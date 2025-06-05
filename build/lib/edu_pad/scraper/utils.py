@@ -2,7 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 
 def safe_print(text):
-    """Maneja impresión segura para consolas que no soportan Unicode"""
     try:
         print(text)
     except UnicodeEncodeError:
