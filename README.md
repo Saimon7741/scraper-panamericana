@@ -62,6 +62,7 @@ scraper-panamericana/
 ├── .gitignore
 ├── accionables.yml
 ├── Dockerfile
+├── README.md
 └── setup.py
 ```
 
