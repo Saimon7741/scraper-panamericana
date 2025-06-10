@@ -1,4 +1,6 @@
+pandas
+requests
 streamlit
-ydata-profiling>=4.0.0
-pandas==2.2.3
+beautifulsoup4
 openpyxl
+lxml
