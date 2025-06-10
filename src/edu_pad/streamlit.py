@@ -11,7 +11,7 @@ def main():
     
 
     df = pd.read_xlsx("src/edu_pad/static/xlsx/Productos_Panamericana.xlsx")
-    columnas = ["abrir","max","min","cerrar","cierre_ajustado","volumen","indicador"]
+    columnas = ["Fecha","Producto","Precio","URL"]
     df_2 = df[columnas]
-    profile = ProfileReport(df_2, title="Dashboard Indicador Dolar")
+    profile = ProfileReport(df_2, title="Dashboard Panamericana")
     st.title("Análisis de Datos")
