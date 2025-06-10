@@ -1,5 +1,7 @@
+README.md
 setup.py
 src/edu_pad/main.py
+src/edu_pad/streamlit.py
 src/edu_pad.egg-info/PKG-INFO
 src/edu_pad.egg-info/SOURCES.txt
 src/edu_pad.egg-info/dependency_links.txt

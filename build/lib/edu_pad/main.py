@@ -1,7 +1,7 @@
 import argparse
-from scraper.scraping import run_scraper
-from scraper.storage.db import DB
-from scraper.storage.excel import Excel
+from .scraper.scraping import run_scraper
+from .scraper.storage.db import DB
+from .scraper.storage.excel import Excel
 
 def safe_print(text):
     try:
