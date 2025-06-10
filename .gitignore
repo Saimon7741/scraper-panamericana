@@ -2,3 +2,4 @@ venv
 /venv
 .vscode
 /vscode
+src/edu_pad/__pycache__/streamlit.cpython-312.pyc
