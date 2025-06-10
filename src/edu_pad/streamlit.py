@@ -3,15 +3,35 @@ from ydata_profiling import ProfileReport
 import pandas as pd
 import os
 
-
-
 def main():
-
-
+    st.title("Análisis de Datos - Panamericana")
     
 
-    df = pd.read_excel("src/edu_pad/static/xlsx/Productos_Panamericana.xlsx")
-    columnas = ["Fecha","Producto","Precio","URL"]
-    df_2 = df[columnas]
-    profile = ProfileReport(df_2, title="Dashboard Panamericana")
-    st.title("Análisis de Datos")
+    excel_path = os.path.join("src", "edu_pad", "static", "xlsx", "Productos_Panamericana.xlsx")
+    
+
+    if not os.path.exists(excel_path):
+        st.error(f"Archivo no encontrado en: {excel_path}")
+        st.stop()
+    
+    try:
+
+        df = pd.read_excel(excel_path)
+        
+
+        columnas = ["Fecha", "Producto", "Precio", "URL"]
+        df_2 = df[columnas]
+        
+
+        profile = ProfileReport(df_2, title="Dashboard Panamericana")
+        st_profile_report(profile)
+        
+    except Exception as e:
+        st.error(f"Error al procesar el archivo: {str(e)}")
+
+def st_profile_report(profile_report):
+    from streamlit.components.v1 import html
+    html(profile_report.to_html(), height=1000, scrolling=True)
+
+if __name__ == "__main__":
+    main()
