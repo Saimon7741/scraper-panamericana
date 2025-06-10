@@ -10,7 +10,7 @@ def main():
 
     
 
-    df = pd.read_xlsx("src/edu_pad/static/xlsx/Productos_Panamericana.xlsx")
+    df = pd.read_excel("src/edu_pad/static/xlsx/Productos_Panamericana.xlsx")
     columnas = ["Fecha","Producto","Precio","URL"]
     df_2 = df[columnas]
     profile = ProfileReport(df_2, title="Dashboard Panamericana")
